@@ -94,6 +94,9 @@
   text-align: left;
   cursor: pointer;
 }
+.acoes-livro button:hover {
+  color: #ffd900;
+}
 
 .acoes-livro button i {
   width: 16px;

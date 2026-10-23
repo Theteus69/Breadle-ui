@@ -80,10 +80,12 @@
           }
         </button>
 
-        <button type="button">
+        @if (item.colecaoId) {
+        <button type="button" (click)="verColecao()">
           <i class="bi bi-book" aria-hidden="true"></i>
           <span>Ver coleção</span>
         </button>
+        }
 
         <button type="button">
           <i class="bi bi-info-circle" aria-hidden="true"></i>

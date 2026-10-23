@@ -51,4 +51,14 @@ export class Detalhes {
     this.livraria.alternar(livro.id);
   }
 
+  verColecao(): void {
+    const colecaoId = this.livro()?.colecaoId;
+
+    if (colecaoId === undefined) {
+      return;
+    }
+
+    this.router.navigate(['/colecoes', colecaoId]);
+  }
+
 }
