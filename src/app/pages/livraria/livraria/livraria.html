@@ -1,0 +1,51 @@
+<main class="pagina-livraria">
+
+    <header class="cabecalho">
+        <h1>Minha Livraria</h1>
+
+        @if (auth.logado() && livraria.total() > 0) {
+        <span class="contador">
+            {{ livraria.total() }} {{ livraria.total() === 1 ? 'livro' : 'livros' }}
+        </span>
+        }
+    </header>
+
+    @if (!auth.logado()) {
+
+    <section class="vazio" role="status">
+        <i class="bi bi-person-lock" aria-hidden="true"></i>
+        <p>Entre na sua conta para ter a sua livraria particular.</p>
+        <a class="botao" routerLink="/login" [queryParams]="{ voltar: '/livraria' }">Entrar</a>
+    </section>
+
+    } @else if (livraria.total() === 0) {
+
+    <section class="vazio" role="status">
+        <i class="bi bi-bookshelf" aria-hidden="true"></i>
+        <p>Sua livraria ainda está vazia.</p>
+        <p class="dica">
+            Abra um livro e clique em “Adicionar a minha Livraria” para guardá-lo aqui.
+        </p>
+        <a class="botao" routerLink="/livros">Explorar livros</a>
+    </section>
+
+    } @else {
+
+    <ul class="estante">
+        @for (livro of livraria.livros(); track livro.id) {
+        <li class="item">
+            <app-card-livro [livro]="livro" />
+
+            <span class="titulo-livro">{{ livro.titulo }}</span>
+
+            <button class="remover" type="button" [attr.aria-label]="'Remover ' + livro.titulo + ' da minha Livraria'"
+                (click)="remover(livro)">
+                <i class="bi bi-trash" aria-hidden="true"></i>
+            </button>
+        </li>
+        }
+    </ul>
+
+    }
+
+</main>

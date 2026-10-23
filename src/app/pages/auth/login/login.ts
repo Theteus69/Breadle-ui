@@ -1,7 +1,8 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../../core/services/auth-service';
+
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,7 @@ export class Login {
   private fb = inject(FormBuilder);
   private auth = inject(AuthService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
 
   erro = signal('');
   enviado = signal(false);
@@ -45,6 +47,9 @@ export class Login {
       this.erro.set(mensagem);
       return;
     }
-    this.router.navigateByUrl('/');
+    
+    const voltar = this.route.snapshot.queryParamMap.get('voltar');
+    const destino = voltar && voltar.startsWith('/') && !voltar.startsWith('//') ? voltar : '/';
+    this.router.navigateByUrl(destino);
   }
 }
