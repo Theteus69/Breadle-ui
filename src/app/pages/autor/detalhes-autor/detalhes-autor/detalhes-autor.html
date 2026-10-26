@@ -1,0 +1,96 @@
+@if (autor(); as item) {
+
+<app-container>
+
+  <main class="detalhes-autor">
+
+    <button type="button" class="voltar" (click)="voltar()">
+      <i class="bi bi-chevron-left" aria-hidden="true"></i>
+      Voltar
+    </button>
+
+    <section class="perfil">
+
+      <aside class="lateral">
+
+        @if (!fotoFalhou()) {
+        <img class="foto" [src]="item.fotoUrl" [alt]="'Foto de ' + item.nome" (error)="fotoFalhou.set(true)">
+        } @else {
+        <div class="foto foto-placeholder" role="img" [attr.aria-label]="'Sem foto de ' + item.nome">
+          {{ iniciais() }}
+        </div>
+        }
+
+        <div class="acoes-autor">
+
+          <button type="button" [attr.aria-pressed]="favorito()" (click)="alternarFavorito()">
+            <i class="bi" [class.bi-star-fill]="favorito()" [class.bi-star]="!favorito()" aria-hidden="true"></i>
+            <span>{{ favorito() ? 'Autor(a) favoritado(a)' : 'Favoritar Autor(a)' }}</span>
+          </button>
+
+          <button type="button" (click)="verObras()">
+            <i class="bi bi-book" aria-hidden="true"></i>
+            <span>Ver obras</span>
+          </button>
+
+        </div>
+
+      </aside>
+
+      <section class="biografia">
+
+        <header class="cabecalho">
+          <h1>{{ item.nome }}</h1>
+
+          <div class="avaliacao" role="img" [attr.aria-label]="'Avaliação: ' + item.nota + ' de 5 estrelas'">
+            @for (n of estrelas; track n) {
+            <i class="bi" [class.bi-star-fill]="n <= item.nota" [class.bi-star]="n > item.nota"
+              aria-hidden="true"></i>
+            }
+          </div>
+        </header>
+
+        @for (paragrafo of item.biografia; track $index) {
+        <p>{{ paragrafo }}</p>
+        }
+
+      </section>
+
+    </section>
+
+    <section class="obras" #secaoObras aria-label="Obras do autor">
+
+      <h2>Obras na Breadle</h2>
+
+      @if (obras().length) {
+      <div class="lista-obras">
+        @for (livro of obras(); track livro.id) {
+        <a class="obra" [routerLink]="['/livro/detalhes', livro.id]">
+          <img [src]="livro.capaUrl" [alt]="'Capa de ' + livro.titulo">
+          <span class="obra-titulo">{{ livro.titulo }}</span>
+          @if (livro.dataPublicacao) {
+          <span class="obra-ano">{{ livro.dataPublicacao.getFullYear() }}</span>
+          }
+        </a>
+        }
+      </div>
+      } @else {
+      <p>Nenhuma obra deste autor está disponível no momento.</p>
+      }
+
+    </section>
+
+  </main>
+
+</app-container>
+
+} @else {
+
+<app-container>
+  <main class="nao-encontrado">
+    <p>Autor não encontrado.</p>
+    <a routerLink="/livros">Voltar para os livros</a>
+  </main>
+</app-container>
+
+}

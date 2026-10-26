@@ -87,10 +87,12 @@
         </button>
         }
 
-        <button type="button">
+        @if (autor()) {
+        <button type="button" (click)="verAutor()">
           <i class="bi bi-info-circle" aria-hidden="true"></i>
           <span>Saber mais sobre o autor</span>
         </button>
+        }
 
         <button type="button">
           <i class="bi bi-download" aria-hidden="true"></i>

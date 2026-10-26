@@ -12,6 +12,7 @@ import { Atividades } from './pages/atividades/atividades';
 import { Cadastro } from './pages/auth/cadastro/cadastro';
 import { Login } from './pages/auth/login/login';
 import { Livraria } from './pages/livraria/livraria/livraria';
+import { DetalhesAutor } from './pages/autor/detalhes-autor/detalhes-autor/detalhes-autor';
 
 export const routes: Routes = [
   { path: '', component: Home, pathMatch: 'full' },
@@ -28,6 +29,7 @@ export const routes: Routes = [
   { path: 'login', component: Login },
   { path: 'cadastro', component: Cadastro },
   { path: 'livraria', component: Livraria },
+  { path: 'autor/:id', component: DetalhesAutor },
   { path: '**', redirectTo: '' },
   
 ];

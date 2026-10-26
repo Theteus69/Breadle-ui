@@ -791,4 +791,8 @@ export class LivroService {
     return this.livros.filter(livro => livro.colecaoId === colecaoId);
   }
 
+  listarPorAutor(nome: string): readonly Livro[] {
+    return this.livros.filter(livro => livro.autor === nome);
+  }
+
 }

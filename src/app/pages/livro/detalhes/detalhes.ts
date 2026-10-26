@@ -8,6 +8,7 @@ import { CapaLivro } from '../../../shared/components/capa-livro/capa-livro';
 import { LivroService } from '../../../core/services/livro-service';
 import { LivrariaService } from '../../../core/services/livraria.service';
 import { AuthService } from '../../../core/services/auth-service';
+import { AutorService } from '../../../core/services/autor-service';
 
 @Component({
   selector: 'app-detalhes',
@@ -22,6 +23,8 @@ export class Detalhes {
   private livroService = inject(LivroService);
   private livraria = inject(LivrariaService);
   private auth = inject(AuthService);
+  private autorService = inject(AutorService);
+
 
   private id = toSignal(
     this.route.paramMap.pipe(map(params => Number(params.get('id')))),
@@ -61,4 +64,15 @@ export class Detalhes {
     this.router.navigate(['/colecoes', colecaoId]);
   }
 
+  autor = computed(() => this.autorService.buscarPorNome(this.livro()?.autor));
+
+  verAutor(): void {
+    const autor = this.autor();
+
+    if (!autor) {
+      return;
+    }
+
+    this.router.navigate(['/autor', autor.id]);
+  }
 }
